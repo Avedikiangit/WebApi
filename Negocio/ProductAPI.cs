@@ -19,7 +19,8 @@ namespace Negocio
         }
         public Products Put(Products prod)
         {
-            var product = Datos.listaProductos.Where(item => item.id == prod.id).First();
+         
+                var product = Datos.listaProductos.Where(item => item.id == prod.id).First();
             Datos.listaProductos.Remove(product);
             Datos.listaProductos.Add(prod);
             return product;

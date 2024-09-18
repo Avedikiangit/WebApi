@@ -59,14 +59,25 @@ namespace trabajofinint.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut]
-        public Products Put([FromBody] Products product)
+        [HttpPut("{id}")]
+        
+        public IActionResult Put([FromBody] Products product)
+        
         {
-            return api.Put(product);
-        }
+            try
+            {
+                Products algo = api.Put(product);
+                return StatusCode(StatusCodes.Status200OK, new String[] {"hola"});
 
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,"");
+            }
+        }
+        
         // DELETE api/<ValuesController>/5
-        [HttpDelete("{id}")]
+       [HttpDelete("{id}")]
         public void Delete(int id)
         {
             api.Delete(id);
