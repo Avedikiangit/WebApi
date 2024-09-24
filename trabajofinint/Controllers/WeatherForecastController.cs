@@ -52,10 +52,25 @@ namespace trabajofinint.Controllers
         }
 
         // POST api/<ValuesController>/products
+      
         [HttpPost("products")]
-        public Products Post([FromBody] Products producto)
+        
+        
+        public IActionResult Post([FromBody] Products producto)
         {
-            return api.Post(producto);
+            Products p;    
+            try
+            {
+                p = api.Post(producto);
+                
+            }
+            catch (Exception ex) 
+            {
+                return StatusCode(500,ex.Message);
+
+            
+            }
+            return StatusCode(201,p);
         }
 
         // PUT api/<ValuesController>/5
@@ -78,13 +93,22 @@ namespace trabajofinint.Controllers
         
         // DELETE api/<ValuesController>/5
        [HttpDelete("{id}")]
-        public void Delete(int id)
+        
+        public IActionResult Delete(int id)
+        
         {
-            api.Delete(id);
+            if (api.Delete(id)==0)
+            {
+                return NotFound();
+
+            }
+            else
+            {
+                return StatusCode(200);
+            }
         }
     }
 
-
-
+ 
 
 }

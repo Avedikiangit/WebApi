@@ -15,7 +15,14 @@ namespace Negocio
         public void Update(Products producto) { }
         public int Delete(int id)
         {
-            return Datos.listaProductos.RemoveAll(item => item.id == id);
+            if (Datos.listaProductos.Any(p => p.id == id))
+            {
+                return Datos.listaProductos.RemoveAll(item => item.id == id);
+            }
+            else
+            {
+                return 0;
+            }
         }
         public Products Put(Products prod)
         {
