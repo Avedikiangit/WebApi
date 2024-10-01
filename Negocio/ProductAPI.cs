@@ -34,6 +34,7 @@ namespace Negocio
         }
         public Products Post(Products producto)
         {
+            producto.id = Datos.listaProductos.Count() + 1;
             Datos.listaProductos.Add(producto);
 
             return producto;

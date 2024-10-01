@@ -6,33 +6,6 @@ namespace trabajofinint.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class WeatherForecastController : ControllerBase
-    {
-        private static readonly string[] Summaries = new[]
-        {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-        private readonly ILogger<WeatherForecastController> _logger;
-
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
-        {
-            _logger = logger;
-        }
-
-        [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
-        {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
-        }
-    }
-
     public class ProductController : ControllerBase
     {
         ProductsAPI api = new ProductsAPI();
@@ -82,12 +55,12 @@ namespace trabajofinint.Controllers
             try
             {
                 Products algo = api.Put(product);
-                return StatusCode(StatusCodes.Status200OK, new String[] {"hola"});
+                return StatusCode(StatusCodes.Status200OK, new String[] { "Producto actualizado exitosamente." });
 
             }
             catch (Exception ex)
             {
-                return StatusCode(StatusCodes.Status500InternalServerError,"");
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al actualizar el producto");
             }
         }
         
