@@ -47,14 +47,14 @@ namespace trabajofinint.Controllers
         }
 
         // PUT api/<ValuesController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         
         public IActionResult Put([FromBody] Products product)
         
         {
             try
             {
-                Products algo = api.Put(product);
+                Products prod = api.Put(product);
                 return StatusCode(StatusCodes.Status200OK, new String[] { "Producto actualizado exitosamente." });
 
             }
@@ -63,14 +63,14 @@ namespace trabajofinint.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, "Ocurrió un error al actualizar el producto");
             }
         }
-        
-        // DELETE api/<ValuesController>/5
+
+       // DELETE api/<ValuesController>/5
        [HttpDelete("{id}")]
-        
+
         public IActionResult Delete(int id)
-        
+
         {
-            if (api.Delete(id)==0)
+            if (api.Delete(id) == 0)
             {
                 return NotFound();
 
