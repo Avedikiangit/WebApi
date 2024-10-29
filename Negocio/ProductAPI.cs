@@ -6,26 +6,34 @@ namespace Negocio
 {
     public class ProductsAPI
     {
-        string connStr = "Server=sql10.freemysqlhosting.net;Database=sql10739703;Uid=sql10739703;Pwd=d4q6qAjJg6;";
+        string connStr = "Server=sql10.freemysqlhosting.net;Database=sql10741376;Uid=sql10741376;Pwd=vqRiz5UenI;";
+
+
+
         public List<Products> GetAll()
         {
             List<Products> products = new List<Products>();
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
-                conn.Open();
-                string sql = "SELECT * FROM Products";
-                products= conn.Query<Products>(sql).ToList();
                 
-
+                
+                    conn.Open();
+                    string sql = "SELECT * FROM Products";
+                    products = conn.Query<Products>(sql).ToList();
+               
+                
+                    
+                
             }
             return products;
         }
+
         public Products GetById(int id)
         {
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();
-                string sql = "SELECT Id, Name, Price FROM Products WHERE Id = @Id";
+                string sql = "SELECT * FROM Products WHERE Id = @Id";
                 return conn.QueryFirstOrDefault<Products>(sql, new { Id = id });
             }
         }
@@ -46,39 +54,63 @@ namespace Negocio
             }
 
         }
+       
         public Products Put(Products prod)
         {
-           using (MySqlConnection conn = new MySqlConnection(connStr))
+            using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();
 
-                string sql = "UPDATE Products SET Name = @Name, Price = @Price WHERE Id = @Id";
-                int rowsAffected = conn.Execute(sql, new { Name = prod.Name, Price = prod.price, Id = prod.id });
-
+                string sql = "UPDATE Products SET Title = @Title, Price = @price, description = @description, category = @category WHERE Id = @Id";
+                int rowsAffected = conn.Execute(sql, new
+                {
+                    Title = prod.Title,
+                    Price = prod.price,
+                    Description = prod.description,
+                    Category = prod.category,
+                    Id = prod.id
+                });
 
                 if (rowsAffected > 0)
                 {
-                    return prod; 
+                    return prod;
                 }
                 else
                 {
                     return null;
                 }
             }
-
-          
         }
+
         public Products Post(Products producto)
         {
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();
 
-                string sql = "INSERT INTO Products (Name, Price) VALUES (@Name, @Price)";
-                conn.Execute(sql, new { Name = producto.Name, Price = producto.price });
+                string sql = "INSERT INTO Products (Title, Price,description,category) VALUES (@Title, @Price,@description,@category)";
+                conn.Execute(sql, new { Title = producto.Title, Price = producto.price, description=producto.description, category=producto.category });
 
                 return producto;
             }
         }
+
+        public List<string> GetAllCategories()
+        {
+            List<string> listaProductos = new List<string>();
+            using (MySqlConnection conn = new MySqlConnection(connStr))
+            {               
+                    conn.Open();
+                    string sql = "SELECT Category FROM Categories"; 
+                    listaProductos = conn.Query<string>(sql).ToList();               
+            }
+            return listaProductos;
+        }
+
+
+
     }
+
+
+
 }
