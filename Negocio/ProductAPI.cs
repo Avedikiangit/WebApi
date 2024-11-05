@@ -6,7 +6,7 @@ namespace Negocio
 {
     public class ProductsAPI
     {
-        string connStr = "Server=sql10.freemysqlhosting.net;Database=sql10741376;Uid=sql10741376;Pwd=vqRiz5UenI;";
+        string connStr = "Server=db4free.net;Database=lasnieves110424;Uid=lasnieves110424;Pwd=lasnieves110424;";
 
 
 

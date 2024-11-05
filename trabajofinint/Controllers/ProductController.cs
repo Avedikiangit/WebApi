@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Negocio;
 using Negocio.Modelo_;
 using Org.BouncyCastle.Pqc.Crypto.Lms;
+using System.Collections.Generic;
 
 namespace trabajofinint.Controllers
 {
@@ -13,31 +14,61 @@ namespace trabajofinint.Controllers
 
         // GET: api/<ValuesController>/products
         [HttpGet("products")]
-        public List<Products> Get()
+        public IActionResult Get()
         {
-            return api.GetAll();
+            try
+            {
+                var products = api.GetAll();
+                return Ok(products); 
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, "Ha ocurrido un error: {ex.Message}"); 
+            }
         }
         // GET: api/<ValuesController>/products/6
+
         [HttpGet("categories")]
-        public List<string> GetCategories()
+        public IActionResult GetCategories()
         {
-            ProductsAPI productsAPI = new ProductsAPI();
-            List<string> categories = productsAPI.GetAllCategories();
-            return categories;
+            try
+            {
+                ProductsAPI productsAPI = new ProductsAPI();
+                List<string> categories = productsAPI.GetAllCategories();
+                return Ok(categories); 
+            }
+            catch (Exception ex)
+            {
+                
+                return StatusCode(500, " error: {ex.Message}"); 
+            }
         }
 
 
-    
-    // GET api/<ValuesController>/products/5
-    [HttpGet("products/{id}")]
-    public Products Get(int id)
-    {
-        return api.GetById(id);
-    }
 
-    // POST api/<ValuesController>/products
 
-    [HttpPost("products")]
+        // GET api/<ValuesController>/products/5
+        // GET api/<ValuesController>/products/5
+        [HttpGet("products/{id}")]
+        public IActionResult Get(int id)
+        {
+            try
+            {
+                var product = api.GetById(id);
+                return product != null ? Ok(product) : NotFound(); 
+            }
+            catch
+            {
+                return StatusCode(500, "Ha ocurrido un error");
+            }
+        }
+
+
+
+        // POST api/<ValuesController>/products
+
+        [HttpPost("products")]
 
     public IActionResult Post([FromBody] Products producto)
     {
