@@ -62,14 +62,11 @@ namespace Negocio
                 conn.Open();
 
                 string sql = "UPDATE Products SET Title = @Title, Price = @price, description = @description, category = @category WHERE Id = @Id";
-                int rowsAffected = conn.Execute(sql, new
-                {
-                    Title = prod.Title,
-                    Price = prod.price,
-                    Description = prod.description,
-                    Category = prod.category,
-                    Id = prod.id
-                });
+                int rowsAffected = conn.Execute(sql, prod);
+                
+                    
+                    
+                
 
                 if (rowsAffected > 0)
                 {
