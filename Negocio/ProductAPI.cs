@@ -55,27 +55,25 @@ namespace Negocio
 
         }
        
-        public Products Put(Products prod)
+        public Products Put(Products producto)
         {
             using (MySqlConnection conn = new MySqlConnection(connStr))
             {
                 conn.Open();
 
                 string sql = "UPDATE Products SET Title = @Title, Price = @price, description = @description, category = @category WHERE Id = @Id";
-                int rowsAffected = conn.Execute(sql, prod);
                 
-                    
-                    
-                
+                int rowsAffected = conn.Execute(sql, producto);
 
                 if (rowsAffected > 0)
                 {
-                    return prod;
+                    return producto;
                 }
                 else
                 {
                     return null;
                 }
+
             }
         }
 
@@ -86,7 +84,7 @@ namespace Negocio
                 conn.Open();
 
                 string sql = "INSERT INTO Products (Title, Price,description,category) VALUES (@Title, @Price,@description,@category)";
-                conn.Execute(sql, new { Title = producto.Title, Price = producto.price, description=producto.description, category=producto.category });
+                conn.Execute(sql, producto);
 
                 return producto;
             }
